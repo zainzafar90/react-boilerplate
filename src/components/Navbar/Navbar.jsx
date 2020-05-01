@@ -10,7 +10,9 @@ import {
   Menu,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { logout } from "redux/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const classes = useStyles();
@@ -37,6 +40,10 @@ const Navbar = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -73,7 +80,7 @@ const Navbar = () => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
           )}
