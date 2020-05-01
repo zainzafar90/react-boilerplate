@@ -1,4 +1,4 @@
-import { Login, Logout, NotFound } from "../pages";
+import { Login, Logout, NotFound, Dashboard } from "../pages";
 
 export const publicRoutes = [
   {
@@ -18,11 +18,10 @@ export const publicRoutes = [
 ];
 
 export const privateRoutes = [
-  // {
-  //   title: "Deliveries",
-  //   icon: "ship",
-  //   path: "/deliveries/:id?",
-  //   exact: true,
-  //   component: Deliveries,
-  // },
+  {
+    title: "Dashboard",
+    path: "/dashboard",
+    exact: true,
+    component: Dashboard,
+  },
 ];

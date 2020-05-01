@@ -15,7 +15,7 @@ function App() {
   return (
     <Switch>
       {/* Redirect to deliveries page from root  */}
-      <Redirect exact from="/" to="/home" />
+      <Redirect exact from="/" to="/dashboard" />
 
       {/* Routes only accessible to authorized users */}
       {privateRoutes.map(({ component: Comp, ...route }) => (

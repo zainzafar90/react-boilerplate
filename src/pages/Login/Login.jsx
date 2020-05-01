@@ -1,23 +1,22 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import * as Yup from "yup";
-import { Form, Formik, ErrorMessage } from "formik";
+import { Form, Formik } from "formik";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-// import {
-//   Alert,
-//   Button,
-//   Box,
-//   Col,
-//   colors,
-//   FormGroup,
-//   Label,
-//   Row,
-//   StoqoLogo,
-//   TextInput,
-//   Typography,
-// } from '@stoqo/complib';
+import {
+  Grid,
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Paper,
+  Typography,
+  makeStyles,
+  Collapse,
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 import { login } from "redux/auth";
 
@@ -25,6 +24,36 @@ const schema = Yup.object().shape({
   email: Yup.string().required(),
   password: Yup.string().required(),
 });
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "100vh",
+  },
+  image: {
+    backgroundImage: "url(/img/bg.jpeg)",
+    backgroundRepeat: "no-repeat",
+    backgroundColor: theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 const Login = (props) => {
   const { isAuthenticated, error } = useSelector((state) => state.auth);
@@ -43,158 +72,88 @@ const Login = (props) => {
     dispatch(login(values));
   };
 
+  const classes = useStyles();
+
   return (
-    <div>Login Page</div>
-    // <Wrapper>
-    //   <Box display="flex" height="100%">
-    //     <LoginImage />
-    //     <LoginContainer>
-    //       <LoginContent>
-    //         <Row middle="xs">
-    //           <Col xs>
-    //             <LogoContainer height="40px">
-    //               <img src={codLogo} alt="COD Logo" />
-    //               <CODHeader>
-    //                 COD <br />
-    //                 Dashboard
-    //               </CODHeader>
-    //             </LogoContainer>
-    //           </Col>
-    //           <Col xs={6}>
-    //             <LogoContainer height="55px">
-    //               <StoqoLogo />
-    //             </LogoContainer>
-    //           </Col>
-    //         </Row>
-
-    //         <Description>
-    //           Dashboard untuk mempermudah Collector dalam mengumpulkan uang COD
-    //           dari Driver.{" "}
-    //         </Description>
-
-    //         <Formik
-    //           initialValues={{ email: "", password: "" }}
-    //           onSubmit={handleSubmit}
-    //           validationSchema={schema}
-    //         >
-    //           {({ values, errors, handleChange }) => (
-    //             <Form>
-    //               <FormGroup>
-    //                 <Label>Email</Label>
-    //                 <TextInput
-    //                   type="email"
-    //                   placeholder="Input email"
-    //                   name="email"
-    //                   autoFocus
-    //                   value={values.email}
-    //                   onChange={handleChange}
-    //                   hasError={Boolean(errors.email)}
-    //                 />
-    //                 <ErrorMessage name="email" />
-    //               </FormGroup>
-
-    //               <FormGroup>
-    //                 <Label>Password</Label>
-    //                 <TextInput
-    //                   type="password"
-    //                   placeholder="Input password"
-    //                   name="password"
-    //                   value={values.password}
-    //                   onChange={handleChange}
-    //                   hasError={Boolean(errors.password)}
-    //                 />
-    //                 <ErrorMessage name="password" />
-    //               </FormGroup>
-
-    //               <Alert
-    //                 visible={Boolean(error)}
-    //                 variant="danger"
-    //                 title="Error:"
-    //                 dismissable={false}
-    //                 controlled
-    //               >
-    //                 There was an error logging into the application, please
-    //                 check your username and password.
-    //               </Alert>
-
-    //               <Button type="submit" variant="primary">
-    //                 Login
-    //               </Button>
-    //             </Form>
-    //           )}
-    //         </Formik>
-    //       </LoginContent>
-    //     </LoginContainer>
-    //   </Box>
-    // </Wrapper>
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={7} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Login
+          </Typography>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            onSubmit={handleSubmit}
+            validationSchema={schema}
+          >
+            {({ values, errors, handleChange }) => (
+              <Form className={classes.form} noValidate>
+                <TextField
+                  variant="filled"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={values.email}
+                  onChange={handleChange}
+                  error={Boolean(errors.email)}
+                />
+                <TextField
+                  variant="filled"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  value={values.password}
+                  onChange={handleChange}
+                  error={Boolean(errors.password)}
+                />
+                <Collapse in={Boolean(error)}>
+                  <Alert severity="error">
+                    This is an error alert — check it out!
+                  </Alert>
+                </Collapse>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Login
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="#" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </Grid>
+    </Grid>
   );
 };
-
-// const Wrapper = styled.div`
-//   height: 100%;
-//   background-color: white;
-// `;
-
-// const LoginImage = styled.div`
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   background-image: url("/img/bg.jpg");
-//   flex: 1;
-
-//   @media (max-width: 64em) {
-//     display: none;
-//   }
-// `;
-
-// const LoginContainer = styled.div`
-//   position: relative;
-//   flex: 1;
-
-//   ::before {
-//     content: "";
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 1.25rem;
-//     background-color: ${colors.purple[90]};
-//   }
-// `;
-
-// const LoginContent = styled(Box).attrs(() => ({
-//   height: "100%",
-//   display: "flex",
-//   flexDirection: "column",
-//   justifyContent: "center",
-//   maxWidth: "30rem",
-//   margin: "auto",
-// }))`
-//   padding: ${isBrowser ? "6.25rem 3.125rem" : "6.25rem 1.5rem"};
-// `;
-
-// const LogoContainer = styled(Box).attrs(() => ({
-//   display: "flex",
-//   alignItems: "center",
-// }))`
-//   img {
-//     max-height: ${(props) => props.height};
-//   }
-// `;
-
-// const Description = styled(Typography).attrs(() => ({
-//   variant: "heading",
-// }))`
-//   font-weight: normal;
-//   margin: 0.5rem 0 1.25rem 0;
-// `;
-
-// const CODHeader = styled(Typography).attrs(() => ({
-//   variant: "heading",
-// }))`
-//   line-height: 1.25rem;
-//   margin-left: 0.5rem;
-//   margin-bottom: 0;
-// `;
 
 export default withRouter(Login);
