@@ -44,7 +44,7 @@ const Login = (props) => {
   };
 
   return (
-    <div />
+    <div>Login Page</div>
     // <Wrapper>
     //   <Box display="flex" height="100%">
     //     <LoginImage />

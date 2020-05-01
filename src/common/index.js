@@ -1,1 +1,1 @@
-export { default as history } from "./common";
+export * from "./history";

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import config from "./config";
+import config from "config";
 import * as apiURLs from "./apiURL";
 
 // Basic configuration for HTTP calls
