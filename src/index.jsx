@@ -8,15 +8,14 @@ import store from "./redux";
 import { history } from "common";
 import * as serviceWorker from "./serviceWorker";
 
+import "./styles/styles.scss";
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Router history={history}>
-        <App />
-      </Router>
-    </Provider>
-    ,
-  </React.StrictMode>,
+  <Provider store={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );
 
